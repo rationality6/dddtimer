@@ -1,0 +1,31 @@
+{
+  "manifest_version": 3,
+  "name": "dddtimer",
+  "version": "0.1",
+  "description": "dddlist.net timer extension",
+  "background": {
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://n.news.naver.com/*",
+        "https://n.news.naver.com/mnews/*",
+        "https://n.news.naver.com/mnews/article/*",
+        "https://n.news.naver.com/mnews/article/comment/*",
+        "https://*.nytimes.com/*"
+    ],
+      "css": ["src/style.css"],
+      "js": ["src/main.js"]
+    }
+  ],
+  "action": {},
+  "icons": {
+    "16": "images/icon-16.png",
+    "32": "images/icon-32.png",
+    "48": "images/icon-48.png",
+    "128": "images/icon-128.png"
+  },
+  "host_permissions": ["http://*/*", "https://*/*"],
+  "permissions": ["storage", "activeTab", "scripting", "offscreen"]
+}
