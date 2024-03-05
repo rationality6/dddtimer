@@ -21,7 +21,7 @@ class dddTimer {
 
   insertDddTimerDiv() {
     let block_to_insert = document.createElement("span");
-    block_to_insert.innerHTML = "Inserted for Debug";
+    block_to_insert.innerHTML = "timer";
     block_to_insert.id = "dddTimerDiv";
     document.querySelector("#dddTimerFloatDiv").appendChild(block_to_insert);
   }
@@ -35,7 +35,7 @@ class dddTimer {
       .appendChild(space_block_to_insert);
 
     let block_to_insert = document.createElement("span");
-    block_to_insert.innerHTML = "Inserted for Debug Milliseconds";
+    block_to_insert.innerHTML = "milliseconds";
     block_to_insert.id = "dddTimerDivMilliseconds";
     document.querySelector("#dddTimerFloatDiv").appendChild(block_to_insert);
   }
