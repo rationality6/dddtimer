@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "dddtimer",
-  "version": "0.1",
-  "description": "dddlist.net timer extension",
+  "version": "0.2",
+  "description": "for dddlist.net timer extension",
   "background": {
     "type": "module"
   },
@@ -13,7 +13,7 @@
         "https://n.news.naver.com/mnews/*",
         "https://n.news.naver.com/mnews/article/*",
         "https://n.news.naver.com/mnews/article/comment/*"
-    ],
+      ],
       "css": ["src/style.css"],
       "js": ["src/main.js"]
     }
@@ -24,5 +24,11 @@
     "32": "images/icon-32.png",
     "48": "images/icon-48.png",
     "128": "images/icon-128.png"
-  }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["assets/clear.mp3", "assets/coin_get.mp3"],
+      "matches": ["<all_urls>"]
+    }
+  ]
 }

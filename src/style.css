@@ -1,3 +1,39 @@
-body {
-  /* background-color: red; */
+@media (max-width: 800px) {
+  .whenSmallScreen {
+    left: 150px !important;
+  }
+}
+
+#dddTimerFloatDiv {
+  position: fixed;
+  left: 649px;
+  top: 93px;
+  text-align: right;
+  background-color: white;
+
+  z-index: 9999;
+
+  border: 1px solid blue;
+  border-radius: 6px;
+
+  padding: 5px;
+
+  font-size: 11 px;
+}
+
+#dddTimerDivMilliseconds {
+  display: inline-block;
+  width: 30px;
+}
+
+#dddTimerCountdownDiv {
+  color: blue;
+  font-size: 22px;
+  padding: 2px;
+}
+
+#dddTimerRankDiv {
+  border: 1px solid green;
+  border-radius: 6px;
+  padding: 1px;
 }
