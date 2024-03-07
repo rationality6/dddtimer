@@ -11,7 +11,7 @@
   text-align: right;
   background-color: white;
 
-  z-index: 9999;
+  z-index: 5500;
 
   border: 1px solid blue;
   border-radius: 6px;
@@ -28,12 +28,62 @@
 
 #dddTimerCountdownDiv {
   color: blue;
-  font-size: 22px;
-  padding: 2px;
+  font-size: 20px;
+  padding: 3px;
+  display: flex;
+  justify-content: center;
 }
 
 #dddTimerRankDiv {
   border: 1px solid green;
   border-radius: 6px;
   padding: 1px;
+}
+
+.flexSpaceBetween {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.gunImage {
+  width: 70px;
+}
+
+#mainLogo {
+  border: 1px solid green;
+  border-radius: 6px;
+  color: black;
+  padding: 2px;
+  margin-right: 2px;
+}
+
+#mainLogo:hover {
+  background-color: mediumseagreen;
+}
+
+#dddTimerRankDiv:hover {
+  background-color: mediumseagreen;
+}
+
+#rankUpDivBanner {
+  position: fixed;
+  left: 249px;
+  top: 93px;
+  text-align: right;
+  background-color: white;
+
+  z-index: 5510;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.rankUpImage {
+  width: 300px;
+}
+
+.hide {
+  display: none !important;
 }
