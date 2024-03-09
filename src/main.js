@@ -18,7 +18,8 @@ class dddTimer {
     // statics
     this.insertDddTimerBottomDiv();
     this.insertDddTimerRankDiv();
-    this.bulletLeft();
+    // this.bulletAmount();
+    this.bulletAmountImage();
     this.insertGunImage();
     this.insertDddTimerTotalCountDiv();
 
@@ -26,6 +27,8 @@ class dddTimer {
     this.rankUpBanner();
     this.rankupImage();
     this.rankupText();
+
+    this.rankupIconFlexBox();
 
     // update
     this.checkAndUpdateRank();
@@ -47,7 +50,7 @@ class dddTimer {
 
   insertMainLogoName() {
     let block_to_insert = document.createElement("a");
-    block_to_insert.innerHTML = "🇰🇷❗댓글독립군💙 ";
+    block_to_insert.innerHTML = "💙댓글독립군 ";
     block_to_insert.id = "mainLogo";
     block_to_insert.target = "_blank";
     block_to_insert.href =
@@ -101,12 +104,12 @@ class dddTimer {
   insertDddTimerTotalCountDiv() {
     let block_to_insert = document.createElement("div");
     const total = localStorage.getItem("totalVoteCount");
-    block_to_insert.innerHTML = `총: ${total}`;
+    block_to_insert.innerHTML = `총점: ${total}`;
     block_to_insert.id = "dddTimerTotalCountDiv";
     document.querySelector("#dddTimerBottomDiv").appendChild(block_to_insert);
   }
 
-  bulletLeft() {
+  bulletAmount() {
     let block_to_insert = document.createElement("button");
     block_to_insert.innerHTML = `재장전`;
     block_to_insert.id = "dddTimerRankDiv";
@@ -117,8 +120,14 @@ class dddTimer {
     document.querySelector("#dddTimerBottomDiv").appendChild(block_to_insert);
   }
 
-  // 50발(장전)
+  bulletAmountImage() {
+    let img = document.createElement("img");
+    img.src = chrome.runtime.getURL("assets/bullet.png");
+    img.classList = "bulletAmountImage";
+    document.querySelector("#dddTimerRankDiv").innerHTML += img;
+  }
 
+  // 50발(장전)
   insertGunImage() {
     let img = document.createElement("img");
     img.src = chrome.runtime.getURL("assets/k2_idle.png");
@@ -144,6 +153,32 @@ class dddTimer {
   rankupText() {
     let div = document.createElement("div");
     div.innerHTML = "주변에 공유해주세요~";
+    document.querySelector("#rankUpDivBanner").appendChild(div);
+  }
+
+  rankupIconFlexBox() {
+    let div = document.createElement("div");
+    div.id = "rankUpIcons";
+    document.querySelector("#rankUpDivBanner").appendChild(div);
+
+    let img2 = document.createElement("img");
+    img2.src = chrome.runtime.getURL("assets/social_icons/screenshot.png");
+    img2.classList = "rankUpIcon";
+    document.querySelector("#rankUpIcons").appendChild(img2);
+
+    let img1 = document.createElement("img");
+    img1.src = chrome.runtime.getURL("assets/social_icons/facebook.png");
+    img1.classList = "rankUpIcon";
+    document.querySelector("#rankUpIcons").appendChild(img1);
+
+    let img3 = document.createElement("img");
+    img3.src = chrome.runtime.getURL("assets/social_icons/x.png");
+    img3.classList = "rankUpIcon";
+    document.querySelector("#rankUpIcons").appendChild(img3);
+  }
+
+  rankupIcons() {
+    let div = document.createElement("div");
     document.querySelector("#rankUpDivBanner").appendChild(div);
   }
 
@@ -185,7 +220,7 @@ class dddTimer {
     }
 
     if (rank != localStorage.getItem("rank")) {
-      localStorage.setItem("rank", rank)
+      localStorage.setItem("rank", rank);
       this.showAndHideRankUpBanner();
     }
     document.querySelector("#dddTimerRankDiv").innerHTML = `🪖 ${rank}`;
@@ -210,13 +245,21 @@ class dddTimer {
   naverVote() {
     if (!(this.countDonwInterval === undefined)) return;
 
-    let audio = new Audio(chrome.runtime.getURL("./assets/coin_get.mp3"));
-    audio.play();
+    let audioShot = new Audio(chrome.runtime.getURL("./assets/shot_sound.mp3"));
+    audioShot.volume = 0.5;
+    audioShot.play();
 
-    setTimeout(() => {
-      let audioReload = new Audio(chrome.runtime.getURL("./assets/reload.mp3"));
-      audioReload.play();
-    }, 5000);
+    const gunImageDiv = document.querySelector(".gunImage");
+    gunImageDiv.src = chrome.runtime.getURL("assets/k2_shot.gif");
+
+    const addedcount = parseInt(localStorage.getItem("totalVoteCount")) + 1;
+    localStorage.setItem("totalVoteCount", addedcount);
+    const total = localStorage.getItem("totalVoteCount");
+    document.querySelector(
+      "#dddTimerTotalCountDiv"
+    ).innerHTML = `총점: ${total} `;
+
+    this.checkAndUpdateRank();
 
     this.timeSaved = new Date().getTime();
     let afterTenseconds = this.timeSaved + 10000;
@@ -230,29 +273,19 @@ class dddTimer {
       // update
       document.getElementById("dddTimerCountdownDiv").innerHTML = countDown;
 
-      if (countDown == 1) {
-        let audioShot = new Audio(
-          chrome.runtime.getURL("./assets/shot_sound.mp3")
-        );
-        audioShot.volume = 0.5;
-        audioShot.play();
-      }
+      // if (countDown == 1) {
+      //   let audio = new Audio(chrome.runtime.getURL("./assets/clear.mp3"));
+      //   audio.play();
+      // }
 
       // clear
       if (countDown <= 0) {
         document.querySelector("#dddTimerCountdownDiv").innerHTML = "";
 
-        let audio = new Audio(chrome.runtime.getURL("./assets/clear.mp3"));
-        audio.play();
-
-        const addedcount = parseInt(localStorage.getItem("totalVoteCount")) + 1;
-        localStorage.setItem("totalVoteCount", addedcount);
-        const total = localStorage.getItem("totalVoteCount");
-        document.querySelector(
-          "#dddTimerTotalCountDiv"
-        ).innerHTML = `총: ${total} `;
-
-        this.checkAndUpdateRank();
+        let audioReload = new Audio(
+          chrome.runtime.getURL("./assets/reload.mp3")
+        );
+        audioReload.play();
 
         clearInterval(this.countDonwInterval);
         this.countDonwInterval = undefined;
@@ -285,6 +318,12 @@ class dddTimer {
           (e) => {
             let anchor = this.getParentAnchor(e.target);
             if (anchor !== null) {
+
+              console.log(e)
+
+              // if (e.target.classList[0].includes("u_cbox_btn_recomm_on"))
+              //   return;
+
               dddTimerInstance.naverVote();
             }
           },
@@ -298,13 +337,21 @@ class dddTimer {
           (e) => {
             let anchor = this.getParentAnchor(e.target);
             if (anchor !== null) {
+
+              console.log(e)
+              // debugger
+              // if (e.target.classList[0].includes("u_cbox_btn_unrecomm_on"))
+              //   return;
+
+              // u_cbox_btn_unrecomm_on;
+
               dddTimerInstance.naverVote();
             }
           },
           false
         )
       );
-    }, 1000);
+    }, 2000);
   }
 
   setReplyEventListeners() {

@@ -68,10 +68,12 @@
 
 #rankUpDivBanner {
   position: fixed;
-  left: 249px;
-  top: 93px;
+  left: 230px;
+  top: 95px;
   text-align: right;
   background-color: white;
+
+  border-radius: 17px;
 
   z-index: 5510;
 
@@ -86,4 +88,18 @@
 
 .hide {
   display: none !important;
+}
+
+.bulletAmountImage {
+  width: 15px;
+}
+
+.rankUpIcon {
+  width: 40px;
+}
+
+#rankUpIcons {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
 }
