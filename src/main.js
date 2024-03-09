@@ -1,4 +1,4 @@
-class dddTimer {
+class DddTimer {
   constructor() {
     // set localStorage
     if (localStorage.getItem("totalVoteCount") == null) {
@@ -318,8 +318,7 @@ class dddTimer {
           (e) => {
             let anchor = this.getParentAnchor(e.target);
             if (anchor !== null) {
-
-              console.log(e)
+              console.log(e);
 
               // if (e.target.classList[0].includes("u_cbox_btn_recomm_on"))
               //   return;
@@ -337,8 +336,7 @@ class dddTimer {
           (e) => {
             let anchor = this.getParentAnchor(e.target);
             if (anchor !== null) {
-
-              console.log(e)
+              console.log(e);
               // debugger
               // if (e.target.classList[0].includes("u_cbox_btn_unrecomm_on"))
               //   return;
@@ -377,5 +375,5 @@ class dddTimer {
   }
 }
 
-const dddTimerInstance = new dddTimer();
+const dddTimerInstance = new DddTimer();
 console.log("dddtimer loaded");
