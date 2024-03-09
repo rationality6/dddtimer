@@ -6,6 +6,9 @@
   "background": {
     "type": "module"
   },
+  "action": {
+    "default_popup": "index.html"
+  },
   "content_scripts": [
     {
       "matches": [
@@ -18,7 +21,6 @@
       "js": ["src/main.js"]
     }
   ],
-  "action": {},
   "icons": {
     "16": "images/icon-16.png",
     "32": "images/icon-32.png",

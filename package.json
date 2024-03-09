@@ -4,11 +4,15 @@
   "description": "",
   "main": "src/main.js",
   "scripts": {
+    "dev": "vite",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Hyun Ahn",
+  "license": "MIT",
   "dependencies": {
     "clipboard": "^2.0.11"
+  },
+  "devDependencies": {
+    "vite": "^5.1.5"
   }
 }
