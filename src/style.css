@@ -1,13 +1,13 @@
 @media (max-width: 800px) {
   .whenSmallScreen {
-    left: 150px !important;
+    left: 110px !important;
   }
 }
 
 #dddTimerFloatDiv {
   position: fixed;
-  left: 649px;
-  top: 93px;
+  left: 640px;
+  top: 90px;
   text-align: right;
   background-color: white;
 

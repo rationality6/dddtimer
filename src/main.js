@@ -13,8 +13,7 @@ class DddTimer {
     this.insertMainLogoName();
     this.insertDddTimerDiv();
     this.insertDddTimerMillisecondsDiv();
-    this.insertDddTimerCountdownDiv();
-
+    
     // statics
     this.insertDddTimerBottomDiv();
     this.insertDddTimerRankDiv();
@@ -22,6 +21,9 @@ class DddTimer {
     this.bulletAmountImage();
     this.insertGunImage();
     this.insertDddTimerTotalCountDiv();
+
+    // 카운트 아래로
+    this.insertDddTimerCountdownDiv();
 
     // banner
     this.rankUpBanner();
@@ -115,6 +117,7 @@ class DddTimer {
     block_to_insert.id = "dddTimerRankDiv";
     block_to_insert.addEventListener("click", () => {
       let audioReload = new Audio(chrome.runtime.getURL("./assets/reload.mp3"));
+      audioReload.volume = 0.4
       audioReload.play();
     });
     document.querySelector("#dddTimerBottomDiv").appendChild(block_to_insert);
@@ -185,10 +188,10 @@ class DddTimer {
   showAndHideRankUpBanner() {
     document.querySelector("#rankUpDivBanner").classList = "";
 
-    let audioReload = new Audio(
+    let audioLevelUp = new Audio(
       chrome.runtime.getURL("./assets/wow_levelup_sound.mp3")
     );
-    audioReload.play();
+    audioLevelUp.play();
 
     setTimeout(() => {
       this.hideRankUpBanner();
@@ -273,10 +276,10 @@ class DddTimer {
       // update
       document.getElementById("dddTimerCountdownDiv").innerHTML = countDown;
 
-      // if (countDown == 1) {
-      //   let audio = new Audio(chrome.runtime.getURL("./assets/clear.mp3"));
-      //   audio.play();
-      // }
+      if (countDown == 9) {
+        let audio = new Audio(chrome.runtime.getURL("./assets/ticking3.mp3"));
+        audio.play();
+      }
 
       // clear
       if (countDown <= 0) {
@@ -285,6 +288,7 @@ class DddTimer {
         let audioReload = new Audio(
           chrome.runtime.getURL("./assets/reload.mp3")
         );
+        audioReload.volume = 0.3
         audioReload.play();
 
         clearInterval(this.countDonwInterval);
