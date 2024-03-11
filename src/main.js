@@ -13,7 +13,7 @@ class DddTimer {
     this.insertMainLogoName();
     this.insertDddTimerDiv();
     this.insertDddTimerMillisecondsDiv();
-    
+
     // statics
     this.insertDddTimerBottomDiv();
     this.insertDddTimerRankDiv();
@@ -52,11 +52,17 @@ class DddTimer {
 
   insertMainLogoName() {
     let block_to_insert = document.createElement("a");
-    block_to_insert.innerHTML = "💙댓글독립군 ";
     block_to_insert.id = "mainLogo";
     block_to_insert.target = "_blank";
     block_to_insert.href =
       "https://cuddly-blossom-ef6.notion.site/a051e39f2fbe4f4f907cfe94ff4a7aaa";
+
+    let img = document.createElement("img");
+    img.src = chrome.runtime.getURL("assets/logo.png");
+    img.classList = "logoImage";
+
+    block_to_insert.appendChild(img);
+
     document.querySelector("#dddTimerFloatDiv").appendChild(block_to_insert);
   }
 
@@ -117,7 +123,7 @@ class DddTimer {
     block_to_insert.id = "dddTimerRankDiv";
     block_to_insert.addEventListener("click", () => {
       let audioReload = new Audio(chrome.runtime.getURL("./assets/reload.mp3"));
-      audioReload.volume = 0.4
+      audioReload.volume = 0.4;
       audioReload.play();
     });
     document.querySelector("#dddTimerBottomDiv").appendChild(block_to_insert);
@@ -235,6 +241,26 @@ class DddTimer {
     }, refreshRate);
   }
 
+  playShotSound() {
+    let audioShot = new Audio(chrome.runtime.getURL("./assets/shot_sound.mp3"));
+    audioShot.volume = 0.5;
+    audioShot.play();
+  }
+
+  playTickingSound() {
+    let tickingAudio = new Audio(
+      chrome.runtime.getURL("./assets/ticking3.mp3")
+    );
+    tickingAudio.volume = 0.5;
+    tickingAudio.play();
+  }
+
+  playReloadSound() {
+    let audioReload = new Audio(chrome.runtime.getURL("./assets/reload.mp3"));
+    audioReload.volume = 0.4;
+    audioReload.play();
+  }
+
   updateBaseTimerMilliseconds() {
     this.timerBase = new Date();
 
@@ -248,12 +274,10 @@ class DddTimer {
   naverVote() {
     if (!(this.countDonwInterval === undefined)) return;
 
-    let audioShot = new Audio(chrome.runtime.getURL("./assets/shot_sound.mp3"));
-    audioShot.volume = 0.5;
-    audioShot.play();
-
     const gunImageDiv = document.querySelector(".gunImage");
     gunImageDiv.src = chrome.runtime.getURL("assets/k2_shot.gif");
+
+    this.playShotSound();
 
     const addedcount = parseInt(localStorage.getItem("totalVoteCount")) + 1;
     localStorage.setItem("totalVoteCount", addedcount);
@@ -267,29 +291,29 @@ class DddTimer {
     this.timeSaved = new Date().getTime();
     let afterTenseconds = this.timeSaved + 10000;
 
-    document.querySelector("#dddTimerCountdownDiv").innerHTML = "카운트 시작";
-
     this.countDonwInterval = setInterval(() => {
       this.timeSaved = new Date();
       let countDown = Math.ceil((afterTenseconds - this.timeSaved) * 0.001);
 
+      if (countDown == 9) {
+        document.querySelector("#dddTimerCountdownDiv").innerHTML =
+          "카운트 시작";
+      }
+
       // update
-      document.getElementById("dddTimerCountdownDiv").innerHTML = countDown;
+      if (countDown < 9) {
+        document.getElementById("dddTimerCountdownDiv").innerHTML = countDown;
+      }
 
       if (countDown == 9) {
-        let audio = new Audio(chrome.runtime.getURL("./assets/ticking3.mp3"));
-        audio.play();
+        this.playTickingSound();
       }
 
       // clear
       if (countDown <= 0) {
         document.querySelector("#dddTimerCountdownDiv").innerHTML = "";
 
-        let audioReload = new Audio(
-          chrome.runtime.getURL("./assets/reload.mp3")
-        );
-        audioReload.volume = 0.3
-        audioReload.play();
+        this.playReloadSound();
 
         clearInterval(this.countDonwInterval);
         this.countDonwInterval = undefined;

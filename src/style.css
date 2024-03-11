@@ -13,7 +13,7 @@
 
   z-index: 5500;
 
-  border: 1px solid blue;
+  border: 1px solid #0074ba;
   border-radius: 6px;
 
   padding: 5px;
@@ -51,9 +51,11 @@
 }
 
 #mainLogo {
-  border: 1px solid green;
+  display: inline-flex;
+  align-items: center;
+
+  width: 70px;
   border-radius: 6px;
-  color: black;
   padding: 2px;
   margin-right: 2px;
 }
@@ -102,4 +104,12 @@
   width: 100%;
   display: flex;
   justify-content: space-around;
+}
+
+.logoImage {
+  width: 70px;
+}
+
+.shotBackGround {
+  background-color: yellow;
 }
