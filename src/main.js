@@ -1,15 +1,17 @@
 class DddTimer {
   constructor() {
     // set localStorage
-    if (localStorage.getItem("totalVoteCount") == null) {
-      localStorage.setItem("totalVoteCount", 0);
-    }
-    if (localStorage.getItem("rank") == null) {
-      localStorage.setItem("rank", "이병");
-    }
+    this.setDefaultLocalstorages();
 
-    // DOMs
+    // float div
     this.insertFloatdddTimerDiv();
+
+    // upper
+    this.insertUpperDiv();
+    this.insertFoldImages();
+
+    // middle
+    this.insertMiddleDiv();
     this.insertMainLogoName();
     this.insertDddTimerDiv();
     this.insertDddTimerMillisecondsDiv();
@@ -17,10 +19,12 @@ class DddTimer {
     // statics
     this.insertDddTimerBottomDiv();
     this.insertDddTimerRankDiv();
-    // this.bulletAmount();
     this.bulletAmountImage();
     this.insertGunImage();
     this.insertDddTimerTotalCountDiv();
+
+    // down bottom
+    this.bulletAmount();
 
     // 카운트 아래로
     this.insertDddTimerCountdownDiv();
@@ -30,6 +34,7 @@ class DddTimer {
     this.rankupImage();
     this.rankupText();
 
+    // rank
     this.rankupIconFlexBox();
 
     // update
@@ -38,9 +43,24 @@ class DddTimer {
     // event listeners
     this.setEventListeners();
     this.setReplyEventListeners();
+    this.setFoldUnfoldEventListeners();
 
     // update interval set
     this.setIntervalForUpdateBaseTimerMilliseconds(10);
+
+    console.log("dddtimer loaded");
+  }
+
+  setDefaultLocalstorages() {
+    if (localStorage.getItem("totalVoteCount") == null) {
+      localStorage.setItem("totalVoteCount", 0);
+    }
+    if (localStorage.getItem("rank") == null) {
+      localStorage.setItem("rank", "이병");
+    }
+    if (localStorage.getItem("bulletLeft") == null) {
+      localStorage.setItem("bulletLeft", 50);
+    }
   }
 
   insertFloatdddTimerDiv() {
@@ -48,6 +68,36 @@ class DddTimer {
     block_to_insert.classList = "whenSmallScreen";
     block_to_insert.id = "dddTimerFloatDiv";
     document.body.appendChild(block_to_insert);
+  }
+
+  insertUpperDiv() {
+    let block_to_insert = document.createElement("div");
+    block_to_insert.classList = "upperDiv";
+    block_to_insert.id = "upperDiv";
+
+    document.querySelector("#dddTimerFloatDiv").appendChild(block_to_insert);
+  }
+
+  insertFoldImages() {
+    let img = document.createElement("img");
+    img.src = chrome.runtime.getURL("assets/fold.png");
+    img.id = "foldButton";
+    img.classList = "foldImage hide";
+
+    document.querySelector("#upperDiv").appendChild(img);
+
+    let img2 = document.createElement("img");
+    img2.src = chrome.runtime.getURL("assets/unfold.png");
+    img2.id = "unfoldButton";
+    img2.classList = "foldImage";
+
+    document.querySelector("#upperDiv").appendChild(img2);
+  }
+
+  insertMiddleDiv() {
+    let block_to_insert = document.createElement("div");
+    block_to_insert.id = "dddTimerMiddleDiv";
+    document.querySelector("#dddTimerFloatDiv").appendChild(block_to_insert);
   }
 
   insertMainLogoName() {
@@ -63,28 +113,21 @@ class DddTimer {
 
     block_to_insert.appendChild(img);
 
-    document.querySelector("#dddTimerFloatDiv").appendChild(block_to_insert);
+    document.querySelector("#dddTimerMiddleDiv").appendChild(block_to_insert);
   }
 
   insertDddTimerDiv() {
     let block_to_insert = document.createElement("span");
     block_to_insert.innerHTML = "timer";
     block_to_insert.id = "dddTimerDiv";
-    document.querySelector("#dddTimerFloatDiv").appendChild(block_to_insert);
+    document.querySelector("#dddTimerMiddleDiv").appendChild(block_to_insert);
   }
 
   insertDddTimerMillisecondsDiv() {
-    let space_block_to_insert = document.createElement("span");
-    space_block_to_insert.innerHTML = " ";
-    space_block_to_insert.id = "space";
-    document
-      .querySelector("#dddTimerFloatDiv")
-      .appendChild(space_block_to_insert);
-
     let block_to_insert = document.createElement("span");
     block_to_insert.innerHTML = "milliseconds";
     block_to_insert.id = "dddTimerDivMilliseconds";
-    document.querySelector("#dddTimerFloatDiv").appendChild(block_to_insert);
+    document.querySelector("#dddTimerMiddleDiv").appendChild(block_to_insert);
   }
 
   insertDddTimerCountdownDiv() {
@@ -120,13 +163,13 @@ class DddTimer {
   bulletAmount() {
     let block_to_insert = document.createElement("button");
     block_to_insert.innerHTML = `재장전`;
-    block_to_insert.id = "dddTimerRankDiv";
+    block_to_insert.id = "reloadButton";
     block_to_insert.addEventListener("click", () => {
       let audioReload = new Audio(chrome.runtime.getURL("./assets/reload.mp3"));
       audioReload.volume = 0.4;
       audioReload.play();
     });
-    document.querySelector("#dddTimerBottomDiv").appendChild(block_to_insert);
+    document.querySelector("#upperDiv").appendChild(block_to_insert);
   }
 
   bulletAmountImage() {
@@ -397,7 +440,24 @@ class DddTimer {
       );
     }, 1000);
   }
+
+  setFoldUnfoldEventListeners() {
+    document.querySelector("#foldButton").addEventListener("click", () => {
+      document.querySelector("#foldButton").classList.add("hide");
+      document.querySelector("#unfoldButton").classList.remove("hide");
+
+      document.querySelector("#dddTimerMiddleDiv").classList.remove("hide");
+      document.querySelector("#dddTimerBottomDiv").classList.remove("hide");
+    });
+
+    document.querySelector("#unfoldButton").addEventListener("click", () => {
+      document.querySelector("#foldButton").classList.remove("hide");
+      document.querySelector("#unfoldButton").classList.add("hide");
+
+      document.querySelector("#dddTimerMiddleDiv").classList.add("hide");
+      document.querySelector("#dddTimerBottomDiv").classList.add("hide");
+    });
+  }
 }
 
 const dddTimerInstance = new DddTimer();
-console.log("dddtimer loaded");

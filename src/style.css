@@ -16,7 +16,7 @@
   border: 1px solid #0074ba;
   border-radius: 6px;
 
-  padding: 5px;
+  padding: 1px;
 
   font-size: 11 px;
 }
@@ -112,4 +112,19 @@
 
 .shotBackGround {
   background-color: yellow;
+}
+
+.upperDiv {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.foldImage {
+  padding-left: 1px;
+  padding-right: 1px;
+  width: 12px;
+}
+
+#reloadButton {
+  font-size: 5px;
 }
