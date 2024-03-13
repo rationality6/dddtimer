@@ -345,12 +345,11 @@ class DddTimer {
           "click",
           (e) => {
             let anchor = this.getParentAnchor(e.target);
+
+            // cut when already voted
+            if (anchor.className.includes("u_cbox_btn_recomm_on")) return;
+
             if (anchor !== null) {
-              console.log(e);
-
-              // if (e.target.classList[0].includes("u_cbox_btn_recomm_on"))
-              //   return;
-
               dddTimerInstance.naverVote();
             }
           },
@@ -363,14 +362,11 @@ class DddTimer {
           "click",
           (e) => {
             let anchor = this.getParentAnchor(e.target);
+
+            // cut when already voted
+            if (anchor.className.includes("u_cbox_btn_unrecomm_on")) return;
+
             if (anchor !== null) {
-              console.log(e);
-              // debugger
-              // if (e.target.classList[0].includes("u_cbox_btn_unrecomm_on"))
-              //   return;
-
-              // u_cbox_btn_unrecomm_on;
-
               dddTimerInstance.naverVote();
             }
           },
