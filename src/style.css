@@ -115,6 +115,7 @@
 }
 
 .upperDiv {
+  width: 190px;
   display: flex;
   justify-content: flex-end;
 }
@@ -126,5 +127,5 @@
 }
 
 #reloadButton {
-  font-size: 5px;
+  font-size: 4px;
 }

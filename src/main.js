@@ -24,7 +24,7 @@ class DddTimer {
     this.insertDddTimerTotalCountDiv();
 
     // down bottom
-    this.bulletAmount();
+    // this.bulletAmount();
 
     // 카운트 아래로
     this.insertDddTimerCountdownDiv();
@@ -448,6 +448,7 @@ class DddTimer {
 
       document.querySelector("#dddTimerMiddleDiv").classList.remove("hide");
       document.querySelector("#dddTimerBottomDiv").classList.remove("hide");
+      document.querySelector("#dddTimerCountdownDiv").classList.remove("hide");
     });
 
     document.querySelector("#unfoldButton").addEventListener("click", () => {
@@ -456,6 +457,7 @@ class DddTimer {
 
       document.querySelector("#dddTimerMiddleDiv").classList.add("hide");
       document.querySelector("#dddTimerBottomDiv").classList.add("hide");
+      document.querySelector("#dddTimerCountdownDiv").classList.add("hide");
     });
   }
 }
