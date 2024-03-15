@@ -206,7 +206,7 @@ class DddTimer {
 
       // reload
       localStorage.setItem("bulletLeft", 50);
-      document.querySelector("#bulletLeftDiv").innerHTML = 50;
+      document.querySelector("#bulletLeftDiv").innerHTML = ": 50";
     });
 
     document.querySelector("#downBottomDiv").appendChild(block_to_insert);
@@ -499,6 +499,7 @@ class DddTimer {
       document.querySelector("#dddTimerMiddleDiv").classList.remove("hide");
       document.querySelector("#dddTimerBottomDiv").classList.remove("hide");
       document.querySelector("#dddTimerCountdownDiv").classList.remove("hide");
+      document.querySelector("#downBottomDiv").classList.remove("hide");
     });
 
     document.querySelector("#unfoldButton").addEventListener("click", () => {
@@ -508,6 +509,7 @@ class DddTimer {
       document.querySelector("#dddTimerMiddleDiv").classList.add("hide");
       document.querySelector("#dddTimerBottomDiv").classList.add("hide");
       document.querySelector("#dddTimerCountdownDiv").classList.add("hide");
+      document.querySelector("#downBottomDiv").classList.add("hide");
     });
   }
 
