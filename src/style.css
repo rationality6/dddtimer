@@ -129,3 +129,8 @@
 #reloadButton {
   font-size: 4px;
 }
+
+#dddTimerMiddleDiv {
+  display: flex;
+  justify-content: space-between;
+}
