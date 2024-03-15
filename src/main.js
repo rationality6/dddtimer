@@ -44,6 +44,12 @@ class DddTimer {
     this.setEventListeners();
     this.setReplyEventListeners();
     this.setFoldUnfoldEventListeners();
+    // when sort set listeners
+    this.setSortEventListeners();
+    // post button event listeners
+    this.setPostEventListeners();
+    // more
+    this.setMoreEventListeners();
 
     // update interval set
     this.setIntervalForUpdateBaseTimerMilliseconds(10);
@@ -438,7 +444,7 @@ class DddTimer {
           false
         )
       );
-    }, 1000);
+    }, 2000);
   }
 
   setFoldUnfoldEventListeners() {
@@ -459,6 +465,57 @@ class DddTimer {
       document.querySelector("#dddTimerBottomDiv").classList.add("hide");
       document.querySelector("#dddTimerCountdownDiv").classList.add("hide");
     });
+  }
+
+  setSortEventListeners() {
+    setTimeout(() => {
+      const selecters = document.querySelectorAll(".u_cbox_select");
+
+      selecters.forEach((el) =>
+        el.addEventListener(
+          "click",
+          (e) => {
+            this.setEventListeners();
+            this.setReplyEventListeners();
+          },
+          false
+        )
+      );
+    }, 2000);
+  }
+
+  setPostEventListeners() {
+    setTimeout(() => {
+      const selecters = document.querySelectorAll(".u_cbox_btn_upload");
+
+      selecters.forEach((el) =>
+        el.addEventListener(
+          "click",
+          (e) => {
+            this.setEventListeners();
+            this.setReplyEventListeners();
+          },
+          false
+        )
+      );
+    }, 2000);
+  }
+
+  setMoreEventListeners() {
+    setTimeout(() => {
+      const selecters = document.querySelectorAll(".u_cbox_more_wrap");
+
+      selecters.forEach((el) =>
+        el.addEventListener(
+          "click",
+          (e) => {
+            this.setEventListeners();
+            this.setReplyEventListeners();
+          },
+          false
+        )
+      );
+    }, 2000);
   }
 }
 

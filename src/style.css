@@ -29,7 +29,7 @@
 #dddTimerCountdownDiv {
   color: blue;
   font-size: 20px;
-  padding: 3px;
+  padding: 1px;
   display: flex;
   justify-content: center;
 }
