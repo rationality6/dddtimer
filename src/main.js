@@ -200,7 +200,7 @@ class DddTimer {
     block_to_insert.innerHTML = `재장전`;
     block_to_insert.id = "reloadButton";
     block_to_insert.addEventListener("click", () => {
-      let audioReload = new Audio(chrome.runtime.getURL("./assets/reload.mp3"));
+      let audioReload = new Audio(chrome.runtime.getURL("assets/reload.mp3"));
       audioReload.volume = 0.4;
       audioReload.play();
 
@@ -288,7 +288,7 @@ class DddTimer {
     document.querySelector("#rankUpDivBanner").classList = "";
 
     let audioLevelUp = new Audio(
-      chrome.runtime.getURL("./assets/wow_levelup_sound.mp3")
+      chrome.runtime.getURL("assets/wow_levelup_sound.mp3")
     );
     audioLevelUp.play();
 
@@ -335,21 +335,21 @@ class DddTimer {
   }
 
   playShotSound() {
-    let audioShot = new Audio(chrome.runtime.getURL("./assets/shot_sound.mp3"));
+    let audioShot = new Audio(chrome.runtime.getURL("assets/shot_sound.mp3"));
     audioShot.volume = 0.5;
     audioShot.play();
   }
 
   playTickingSound() {
     let tickingAudio = new Audio(
-      chrome.runtime.getURL("./assets/ticking3.mp3")
+      chrome.runtime.getURL("assets/ticking3.mp3")
     );
     tickingAudio.volume = 0.5;
     tickingAudio.play();
   }
 
   playReloadSound() {
-    let audioReload = new Audio(chrome.runtime.getURL("./assets/reload.mp3"));
+    let audioReload = new Audio(chrome.runtime.getURL("assets/reload.mp3"));
     audioReload.volume = 0.4;
     audioReload.play();
   }
@@ -425,7 +425,7 @@ class DddTimer {
         clearInterval(this.countDonwInterval);
         this.countDonwInterval = undefined;
       }
-    }, 1500);
+    }, 1000);
   }
 
   getParentAnchor = (element) => {
