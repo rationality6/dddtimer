@@ -93,7 +93,8 @@
 }
 
 .bulletAmountImage {
-  width: 15px;
+  width: 20px;
+  height: 15px;
 }
 
 .rankUpIcon {
@@ -111,7 +112,7 @@
 }
 
 .shotBackGround {
-  background-color: yellow;
+  background-color: yellow !important;
 }
 
 .upperDiv {
@@ -127,10 +128,25 @@
 }
 
 #reloadButton {
-  font-size: 4px;
+  font-size: 14px;
+
+  border: 1px solid #0074ba;
+  border-radius: 6px;
+
+  padding: 1px;
+}
+
+#reloadButton:hover {
+  background-color: #0074ba;
 }
 
 #dddTimerMiddleDiv {
   display: flex;
   justify-content: space-between;
+}
+
+.downBottomDiv {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }

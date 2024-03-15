@@ -19,12 +19,14 @@ class DddTimer {
     // statics
     this.insertDddTimerBottomDiv();
     this.insertDddTimerRankDiv();
-    this.bulletAmountImage();
     this.insertGunImage();
     this.insertDddTimerTotalCountDiv();
 
     // down bottom
-    // this.bulletAmount();
+    this.insertDownBottom();
+    this.bulletAmount();
+    this.bulletAmountImage();
+    this.setBulletLeftText();
 
     // 카운트 아래로
     this.insertDddTimerCountdownDiv();
@@ -40,10 +42,12 @@ class DddTimer {
     // update
     this.checkAndUpdateRank();
 
+    // ui
+    this.setFoldUnfoldEventListeners();
+
     // event listeners
     this.setEventListeners();
     this.setReplyEventListeners();
-    this.setFoldUnfoldEventListeners();
     // when sort set listeners
     this.setSortEventListeners();
     // post button event listeners
@@ -67,6 +71,23 @@ class DddTimer {
     if (localStorage.getItem("bulletLeft") == null) {
       localStorage.setItem("bulletLeft", 50);
     }
+    if (localStorage.getItem("bulletCalendarArray") == null) {
+      localStorage.setItem("bulletCalendarArray", []);
+    }
+
+    // reset
+    this.resetCount = 0;
+    if (localStorage.getItem("resetVersionCounter") != this.resetCount) {
+      localStorage.setItem("resetVersionCounter", this.resetCount);
+      this.resetAllLocalstorages();
+    }
+  }
+
+  resetAllLocalstorages() {
+    localStorage.setItem("totalVoteCount", 0);
+    localStorage.setItem("rank", "이병");
+    localStorage.setItem("bulletLeft", 50);
+    localStorage.setItem("bulletCalendarArray", []);
   }
 
   insertFloatdddTimerDiv() {
@@ -158,6 +179,14 @@ class DddTimer {
     document.querySelector("#dddTimerBottomDiv").appendChild(block_to_insert);
   }
 
+  insertDownBottom() {
+    let block_to_insert = document.createElement("div");
+    block_to_insert.classList = "downBottomDiv";
+    block_to_insert.id = "downBottomDiv";
+
+    document.querySelector("#dddTimerFloatDiv").appendChild(block_to_insert);
+  }
+
   insertDddTimerTotalCountDiv() {
     let block_to_insert = document.createElement("div");
     const total = localStorage.getItem("totalVoteCount");
@@ -174,15 +203,30 @@ class DddTimer {
       let audioReload = new Audio(chrome.runtime.getURL("./assets/reload.mp3"));
       audioReload.volume = 0.4;
       audioReload.play();
+
+      // reload
+      localStorage.setItem("bulletLeft", 50);
+      document.querySelector("#bulletLeftDiv").innerHTML = 50;
     });
-    document.querySelector("#upperDiv").appendChild(block_to_insert);
+
+    document.querySelector("#downBottomDiv").appendChild(block_to_insert);
   }
 
   bulletAmountImage() {
     let img = document.createElement("img");
     img.src = chrome.runtime.getURL("assets/bullet.png");
     img.classList = "bulletAmountImage";
-    document.querySelector("#dddTimerRankDiv").innerHTML += img;
+
+    document.querySelector("#downBottomDiv").appendChild(img);
+  }
+
+  setBulletLeftText() {
+    const bulletCount = parseInt(localStorage.getItem("bulletLeft"));
+    let div = document.createElement("div");
+    div.id = "bulletLeftDiv";
+    div.innerHTML = `${bulletCount}`;
+
+    document.querySelector("#downBottomDiv").appendChild(div);
   }
 
   // 50발(장전)
@@ -320,6 +364,14 @@ class DddTimer {
       this.timerBase.getMilliseconds();
   }
 
+  playShotEffect() {
+    document.querySelector("#dddTimerFloatDiv").className =
+      "whenSmallScreen shotBackGround";
+    setTimeout(() => {
+      document.querySelector("#dddTimerFloatDiv").className = "whenSmallScreen";
+    }, 100);
+  }
+
   naverVote() {
     if (!(this.countDonwInterval === undefined)) return;
 
@@ -327,6 +379,12 @@ class DddTimer {
     gunImageDiv.src = chrome.runtime.getURL("assets/k2_shot.gif");
 
     this.playShotSound();
+    this.playShotEffect();
+
+    const bulletCount = parseInt(localStorage.getItem("bulletLeft")) - 1;
+    localStorage.setItem("bulletLeft", bulletCount);
+    const bulletLeft = localStorage.getItem("bulletLeft");
+    document.querySelector("#bulletLeftDiv").innerHTML = `: ${bulletLeft} `;
 
     const addedcount = parseInt(localStorage.getItem("totalVoteCount")) + 1;
     localStorage.setItem("totalVoteCount", addedcount);
@@ -367,7 +425,7 @@ class DddTimer {
         clearInterval(this.countDonwInterval);
         this.countDonwInterval = undefined;
       }
-    }, 1000);
+    }, 1500);
   }
 
   getParentAnchor = (element) => {
@@ -394,13 +452,10 @@ class DddTimer {
           "click",
           (e) => {
             let anchor = this.getParentAnchor(e.target);
-
             // cut when already voted
             if (anchor.className.includes("u_cbox_btn_recomm_on")) return;
 
-            if (anchor !== null) {
-              dddTimerInstance.naverVote();
-            }
+            dddTimerInstance.naverVote();
           },
           false
         )
@@ -411,18 +466,15 @@ class DddTimer {
           "click",
           (e) => {
             let anchor = this.getParentAnchor(e.target);
-
             // cut when already voted
             if (anchor.className.includes("u_cbox_btn_unrecomm_on")) return;
 
-            if (anchor !== null) {
-              dddTimerInstance.naverVote();
-            }
+            dddTimerInstance.naverVote();
           },
           false
         )
       );
-    }, 2000);
+    }, 1500);
   }
 
   setReplyEventListeners() {
@@ -432,19 +484,11 @@ class DddTimer {
       );
 
       selecters.forEach((el) =>
-        el.addEventListener(
-          "click",
-          (e) => {
-            console.log("click");
-            let anchor = this.getParentAnchor(e.target);
-            if (anchor !== null) {
-              this.setEventListeners();
-            }
-          },
-          false
-        )
+        el.addEventListener("click", (e) => {
+          this.setEventListeners();
+        })
       );
-    }, 2000);
+    }, 1000);
   }
 
   setFoldUnfoldEventListeners() {
@@ -477,11 +521,12 @@ class DddTimer {
           (e) => {
             this.setEventListeners();
             this.setReplyEventListeners();
+            this.setSortEventListeners();
           },
           false
         )
       );
-    }, 2000);
+    }, 1500);
   }
 
   setPostEventListeners() {
@@ -494,11 +539,12 @@ class DddTimer {
           (e) => {
             this.setEventListeners();
             this.setReplyEventListeners();
+            this.setSortEventListeners();
           },
           false
         )
       );
-    }, 2000);
+    }, 1500);
   }
 
   setMoreEventListeners() {
@@ -515,8 +561,10 @@ class DddTimer {
           false
         )
       );
-    }, 2000);
+    }, 1500);
   }
 }
 
 const dddTimerInstance = new DddTimer();
+
+// chrome.runtime.sendMessage({ msg: "mainRun" });
